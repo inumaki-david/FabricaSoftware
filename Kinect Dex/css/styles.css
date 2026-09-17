@@ -1,0 +1,227 @@
+/* ==========================================================================
+   Kinetic Dex - Official Pokémon TCG Design System & Styles
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+:root {
+  /* Stitch Color Palette */
+  --color-primary: #1e30b2;
+  --color-primary-container: #3b4cca;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #ccd0ff;
+  --color-primary-fixed: #dfe0ff;
+  --color-primary-fixed-variant: #2335b5;
+
+  --color-secondary: #6d5e00;
+  --color-secondary-container: #fddc00;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #706000;
+  --color-secondary-fixed: #ffe24a;
+  --color-secondary-fixed-dim: #e3c600;
+
+  --color-tertiary: #8c0000;
+  --color-tertiary-container: #b90000;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #ffc5bb;
+
+  --color-surface: #fcf9f8;
+  --color-surface-dim: #dcd9d9;
+  --color-surface-bright: #fcf9f8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f0eded;
+  --color-surface-container-high: #eae7e7;
+  --color-surface-container-highest: #e5e2e1;
+
+  --color-on-surface: #1b1c1c;
+  --color-on-surface-variant: #454654;
+  --color-outline: #757685;
+  --color-outline-variant: #c5c5d6;
+
+  /* Pokémon Official Type Colors */
+  --type-fire: #e24242;
+  --type-water: #4990e2;
+  --type-grass: #55a630;
+  --type-lightning: #f8c300;
+  --type-psychic: #a25bb4;
+  --type-fighting: #c05621;
+  --type-darkness: #2d3748;
+  --type-metal: #718096;
+  --type-dragon: #b7791f;
+  --type-colorless: #a0aec0;
+
+  /* Typography */
+  --font-body: 'Inter', sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* Dark Mode Tokens */
+.dark {
+  --color-surface: #121316;
+  --color-surface-dim: #0d0e11;
+  --color-surface-bright: #252830;
+  --color-surface-container-lowest: #181a1f;
+  --color-surface-container-low: #1d2026;
+  --color-surface-container: #22252c;
+  --color-surface-container-high: #2a2e37;
+  --color-surface-container-highest: #333842;
+
+  --color-on-surface: #f0f1f5;
+  --color-on-surface-variant: #b0b3c2;
+  --color-outline: #6b7082;
+  --color-outline-variant: #383c48;
+
+  --color-primary: #bcc2ff;
+  --color-primary-container: #3b4cca;
+  --color-on-primary: #000e54;
+  --color-on-primary-container: #ccd0ff;
+}
+
+/* Global Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .font-title {
+  font-family: var(--font-display);
+}
+
+/* Material Symbols configuration */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+.material-symbols-outlined[data-weight="fill"],
+.material-symbols-outlined.fill-1 {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ==========================================================================
+   Pokémon Card Holographic Foil Shader & Effects
+   ========================================================================== */
+
+.holo-foil {
+  position: relative;
+  overflow: hidden;
+}
+
+.holo-foil::after,
+.holo-shine {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(223, 224, 255, 0.25) 25%,
+    rgba(255, 226, 74, 0.3) 50%,
+    rgba(255, 74, 134, 0.25) 75%,
+    rgba(255, 255, 255, 0.55) 100%
+  );
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.group:hover .holo-foil::after,
+.group:hover .holo-shine,
+.tcg-card:hover .holo-shine {
+  opacity: 1;
+}
+
+/* 3D Card Hover & Tilt */
+.card-hover,
+.tcg-card,
+.card-lift {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease;
+}
+
+.card-hover:hover,
+.tcg-card:hover,
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(30, 48, 178, 0.16);
+}
+
+.dark .card-hover:hover,
+.dark .tcg-card:hover,
+.dark .card-lift:hover {
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6);
+}
+
+/* Pokéball Background Patterns */
+.pokeball-watermark {
+  background-image: radial-gradient(circle at center, rgba(59, 76, 202, 0.05) 0%, transparent 70%);
+}
+
+/* Official Type Colors */
+.type-fire { background-color: var(--type-fire); color: #ffffff; }
+.type-water { background-color: var(--type-water); color: #ffffff; }
+.type-grass { background-color: var(--type-grass); color: #ffffff; }
+.type-lightning { background-color: var(--type-lightning); color: #211b00; }
+.type-psychic { background-color: var(--type-psychic); color: #ffffff; }
+.type-fighting { background-color: var(--type-fighting); color: #ffffff; }
+.type-darkness { background-color: var(--type-darkness); color: #ffffff; }
+.type-metal { background-color: var(--type-metal); color: #ffffff; }
+.type-colorless { background-color: var(--type-colorless); color: #1b1c1c; }
+
+/* Utilities */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Safe area padding for mobile nav */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
