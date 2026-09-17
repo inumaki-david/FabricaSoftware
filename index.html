@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Fábrica Fitness IA</title>
+    <!-- Importando ícones profissionais do FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================
+           1. VARIÁVEIS E CONFIGURAÇÕES GERAIS
+           ========================================== */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-panel: #1e293b;
+            --neon-green: #10b981;
+            --neon-glow: rgba(16, 185, 129, 0.4);
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==========================================
+           2. BARRA DE NAVEGAÇÃO (NAVBAR)
+           ========================================== */
+        nav {
+            background-color: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--neon-green); }
+        
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--neon-green); }
+
+        .user-profile { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px; }
+        .user-profile img { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--neon-green); }
+
+        /* ==========================================
+           3. ÁREA DE TRABALHO (WORKSPACE)
+           ========================================== */
+        main { flex: 1; display: flex; justify-content: center; padding: 40px 20px; }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--bg-panel);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .header-section h2 { font-size: 2rem; margin-bottom: 10px; }
+        .header-section p { color: var(--text-muted); }
+
+        /* Estilização do Prompt */
+        .prompt-box { position: relative; }
+        textarea {
+            width: 100%;
+            height: 180px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            color: #fff;
+            font-size: 1.1rem;
+            resize: none;
+            transition: all 0.3s;
+        }
+        textarea:focus { outline: none; border-color: var(--neon-green); box-shadow: 0 0 15px var(--neon-glow); }
+
+        .btn-gerar {
+            width: 100%;
+            background: var(--neon-green);
+            color: #000;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-gerar:hover { transform: translateY(-2px); box-shadow: 0 5px 15px var(--neon-glow); }
+
+        /* ==========================================
+           4. ANIMAÇÃO DE LOADING DINÂMICO
+           ========================================== */
+        .loader-container { display: none; flex-direction: column; align-items: center; text-align: center; padding: 40px 0; }
+        .spinner {
+            width: 60px; height: 60px;
+            border: 5px solid #334155;
+            border-top-color: var(--neon-green);
+            border-radius: 50%;
+            animation: girar 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes girar { to { transform: rotate(360deg); } }
+        
+        .step-text { font-size: 1.2rem; font-weight: bold; color: var(--neon-green); margin-bottom: 10px; }
+        .step-desc { color: var(--text-muted); }
+
+        /* ==========================================
+           5. RESULTADO E MOCKUP DE SMARTPHONE
+           ========================================== */
+        .result-container { display: none; text-align: center; }
+        
+        .smartphone-mockup {
+            width: 320px;
+            height: 600px;
+            background: #000;
+            border: 12px solid #334155;
+            border-radius: 40px;
+            margin: 30px auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        /* Detalhe da câmera do celular */
+        .smartphone-mockup::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 25px; background: #334155; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 2;
+        }
+        /* Tela do App simulado */
+        .app-screen {
+            background: #111; width: 100%; height: 100%; padding: 40px 20px 20px; text-align: left;
+        }
+        .app-header { border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+        .app-title { color: var(--neon-green); font-size: 1.2rem; }
+        .app-card { background: #222; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--neon-green); }
+
+        .btn-outline {
+            background: transparent; border: 1px solid #ef4444; color: #ef4444;
+            padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 20px; transition: 0.3s;
+        }
+        .btn-outline:hover { background: #ef4444; color: #fff; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR SIMULADA -->
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-dumbbell"></i> FitFactory AI
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Workspace</a></li>
+            <li><a href="#">Meus Apps</a></li>
+            <li><a href="#">Documentação (ISO)</a></li>
+        </ul>
+        <div class="user-profile">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Davi" alt="Perfil">
+            <span>Davi (Admin)</span>
+        </div>
+    </nav>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main>
+        <div class="container">
+            
+            <!-- TELA 1: ENTRADA DE DADOS -->
+            <section id="tela-input">
+                <div class="header-section">
+                    <h2>Descreva seu Aplicativo Fitness</h2>
+                    <p>Nossa IA irá projetar, codificar e entregar seu software em segundos.</p>
+                </div>
+                
+                <div class="prompt-box">
+                    <textarea id="promptCliente" placeholder="Ex: Quero um sistema de agendamento de treinos de Jiu-Jitsu. Preciso de uma tela que liste os horários disponíveis na agenda e me mande uma notificação quando estiver chegando o horário do treino."></textarea>
+                    <button class="btn-gerar" onclick="iniciarProcesso()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Aplicativo Agora
+                    </button>
+                </div>
+            </section>
+
+            <!-- TELA 2: LOADING ANIMADO E DINÂMICO -->
+            <section id="tela-loading" class="loader-container">
+                <div class="spinner"></div>
+                <div class="step-text" id="loading-title">Inicializando IA...</div>
+                <div class="step-desc" id="loading-desc">Conectando aos servidores da fábrica.</div>
+            </section>
+
+            <!-- TELA 3: MOCKUP DO RESULTADO -->
+            <section id="tela-resultado" class="result-container">
+                <div class="header-section">
+                    <h2><i class="fa-solid fa-check-circle" style="color: var(--neon-green);"></i> Sucesso!</h2>
+                    <p>Aqui está o protótipo funcional baseado no seu briefing.</p>
+                </div>
+
+                <!-- Simulação de um Celular -->
+                <div class="smartphone-mockup">
+                    <div class="app-screen">
+                        <div class="app-header">
+                            <h3 class="app-title"><i class="fa-solid fa-bolt"></i> App Gerado</h3>
+                        </div>
+                        <div class="app-card">
+                            <small>Sua Funcionalidade:</small><br>
+                            <strong>Lista de Treinos</strong>
+                        </div>
+                        <div class="app-card">
+                            <small>Componente Ativo:</small><br>
+                            <strong>Botão de Agendamento</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-outline" onclick="reiniciarSistema()">
+                    <i class="fa-solid fa-rotate-right"></i> Criar Novo App (Resetar)
+                </button>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- LÓGICA DO SISTEMA -->
+    <script>
+        const telaInput = document.getElementById('tela-input');
+        const telaLoading = document.getElementById('tela-loading');
+        const telaResultado = document.getElementById('tela-resultado');
+        
+        const loadingTitle = document.getElementById('loading-title');
+        const loadingDesc = document.getElementById('loading-desc');
+        const inputPrompt = document.getElementById('promptCliente');
+
+        // Carrega o histórico ao abrir a página
+        window.onload = () => {
+            if (localStorage.getItem('prompt_salvo')) {
+                inputPrompt.value = localStorage.getItem('prompt_salvo');
+            }
+        };
+
+        function iniciarProcesso() {
+            if (inputPrompt.value.trim() === "") {
+                alert("O prompt não pode estar vazio! Descreva seu app.");
+                return;
+            }
+
+            // Salva os dados
+            localStorage.setItem('prompt_salvo', inputPrompt.value);
+
+            // Troca de tela
+            telaInput.style.display = 'none';
+            telaLoading.style.display = 'flex';
+
+            // Simulação de etapas da sua equipe (Para a apresentação!)
+            setTimeout(() => {
+                loadingTitle.innerText = "Etapa 1: Análise de Requisitos";
+                loadingDesc.innerText = "Estruturando o JSON dos dados...";
+            }, 1000);
+
+            setTimeout(() => {
+                loadingTitle.innerText = "Etapa 2: Codificação IA";
+                loadingDesc.innerText = "Aplicando Engenharia de Prompts para gerar o Front-end...";
+            }, 3000);
+
+            setTimeout(() => {
+                loadingTitle.innerText = "Etapa 3: Validação de Qualidade";
+                loadingDesc.innerText = "Verificando normas ISO e testes de borda...";
+            }, 5500);
+
+            setTimeout(() => {
+                // Finaliza o loading e mostra o resultado
+                telaLoading.style.display = 'none';
+                telaResultado.style.display = 'block';
+            }, 7500);
+        }
+
+        function reiniciarSistema() {
+            localStorage.removeItem('prompt_salvo');
+            inputPrompt.value = "";
+            telaResultado.style.display = 'none';
+            telaInput.style.display = 'block';
+            
+            // Reseta textos originais
+            loadingTitle.innerText = "Inicializando IA...";
+            loadingDesc.innerText = "Conectando aos servidores da fábrica.";
+        }
+    </script>
+</body>
+</html>
