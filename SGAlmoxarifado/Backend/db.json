@@ -1,0 +1,69 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "Carlos Silva",
+      "cargo": "Admin"
+    },
+    {
+      "id": 2,
+      "nome": "Mariana Souza",
+      "cargo": "Operador"
+    },
+    {
+      "id": 3,
+      "nome": "Roberto Mendes",
+      "cargo": "Operador"
+    }
+  ],
+  "produtos": [
+    {
+      "id": 1,
+      "nome": "Cabo de Rede UTP Cat6 305m",
+      "sku": "CAB-CAT6-001",
+      "quantidade_estoque": 15
+    },
+    {
+      "id": 2,
+      "nome": "Switch Gigabit 24 Portas",
+      "sku": "SWT-GB24-002",
+      "quantidade_estoque": 8
+    },
+    {
+      "id": 3,
+      "nome": "Conector RJ45 Macho (Pacote c/ 100)",
+      "sku": "CON-RJ45-003",
+      "quantidade_estoque": 50
+    },
+    {
+      "id": 4,
+      "nome": "Alicate de Crimpagem Profissional",
+      "sku": "FER-CRIM-004",
+      "quantidade_estoque": 4
+    },
+    {
+      "id": 5,
+      "nome": "Patch Panel 24 Portas Cat6",
+      "sku": "PCH-CAT6-005",
+      "quantidade_estoque": 12
+    }
+  ],
+  "movimentacoes": [
+    {
+      "id": 1,
+      "produto_id": 1,
+      "usuario_id": 1,
+      "tipo": "entrada",
+      "quantidade_movimentada": 10,
+      "data": "2026-08-25T14:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "produto_id": 3,
+      "usuario_id": 2,
+      "tipo": "saida",
+      "quantidade_movimentada": 5,
+      "data": "2026-08-28T09:15:00.000Z"
+    }
+  ]
+}

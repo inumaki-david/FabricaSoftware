@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinetic Dex - Pokémon Deck Organizer</title>
+  <meta name="description" content="Organizador de Decks Pokémon TCG com estética oficial, efeitos holográficos e suporte competitivo." />
+
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet" />
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1e30b2",
+            "primary-container": "#3b4cca",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#ccd0ff",
+            "primary-fixed": "#dfe0ff",
+            "primary-fixed-variant": "#2335b5",
+            "secondary": "#6d5e00",
+            "secondary-container": "#fddc00",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#706000",
+            "secondary-fixed": "#ffe24a",
+            "secondary-fixed-dim": "#e3c600",
+            "tertiary": "#8c0000",
+            "tertiary-container": "#b90000",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#ffc5bb",
+            "surface": "#fcf9f8",
+            "surface-dim": "#dcd9d9",
+            "surface-bright": "#fcf9f8",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f6f3f2",
+            "surface-container": "#f0eded",
+            "surface-container-high": "#eae7e7",
+            "surface-container-highest": "#e5e2e1",
+            "on-surface": "#1b1c1c",
+            "on-surface-variant": "#454654",
+            "outline": "#757685",
+            "outline-variant": "#c5c5d6"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Kinetic Dex Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-white">
+
+  <!-- Desktop TopAppBar (Stitch Exact Layout) -->
+  <header class="w-full sticky top-0 z-50 bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-b border-outline-variant shadow-sm hidden md:flex items-center justify-between px-8 h-16 transition-colors">
+    <!-- Brand Logo -->
+    <div class="flex items-center gap-2.5 cursor-pointer" data-route="dashboard">
+      <span class="material-symbols-outlined text-primary text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">20mp</span>
+      <span class="font-display font-extrabold text-xl text-primary dark:text-primary-fixed italic tracking-tighter">Kinetic Dex</span>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="flex items-center gap-6">
+      <a href="#dashboard" class="nav-item text-primary font-bold px-4 py-1.5 rounded-full hover:bg-primary-container/10 transition-colors text-sm" data-route="dashboard">Home</a>
+      <a href="#decks" class="nav-item text-on-surface-variant font-semibold px-4 py-1.5 rounded-full hover:bg-primary-container/10 transition-colors text-sm" data-route="decks">Decks</a>
+      <a href="#search" class="nav-item text-on-surface-variant font-semibold px-4 py-1.5 rounded-full hover:bg-primary-container/10 transition-colors text-sm" data-route="search">Search</a>
+      <a href="#profile" class="nav-item text-on-surface-variant font-semibold px-4 py-1.5 rounded-full hover:bg-primary-container/10 transition-colors text-sm" data-route="profile">Profile</a>
+    </nav>
+
+    <!-- Header Actions (Theme Toggle & Trainer Avatar) -->
+    <div class="flex items-center gap-3">
+      <button class="theme-toggle-btn w-9 h-9 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant flex items-center justify-center transition-colors" title="Alternar Tema">
+        <span class="material-symbols-outlined theme-icon text-lg">dark_mode</span>
+      </button>
+
+      <div class="w-9 h-9 rounded-full bg-primary-container p-0.5 shadow-sm overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all" data-route="profile" title="Meu Perfil">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZVU5Afdfr0Sj495oEQM9CwWneZpuq1hygaXxXa4113YHXFVPtNS8cK6JkJFP3tw5iuJFvJ2c4DKpaetKHOPqH--6EaG39NZozCoSYk0M4Up7wH2szlEJAWGLMjL_Mq1u4IQJxeKrkX90ynoMxHjDs5JMwS_iQ9PzS6MHBKL-Chb9cUiiFNKMntbDdUuZnVlHJEmmbwPzQYkeydAen-GJshjxZXjtAE8l4C8hJA1fN3WaDS3hJrKnm" alt="Trainer Avatar" class="w-full h-full object-cover rounded-full" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile TopAppBar (Stitch Exact Layout) -->
+  <header class="w-full sticky top-0 z-50 bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-b border-outline-variant shadow-sm flex md:hidden items-center justify-between px-4 h-16">
+    <div class="flex items-center gap-2 cursor-pointer" data-route="dashboard">
+      <span class="material-symbols-outlined text-primary text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">20mp</span>
+      <span class="font-display font-extrabold text-lg text-primary dark:text-primary-fixed italic tracking-tighter">Kinetic Dex</span>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button class="theme-toggle-btn w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+        <span class="material-symbols-outlined theme-icon text-base">dark_mode</span>
+      </button>
+      <div class="w-8 h-8 rounded-full bg-primary-container overflow-hidden" data-route="profile">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZVU5Afdfr0Sj495oEQM9CwWneZpuq1hygaXxXa4113YHXFVPtNS8cK6JkJFP3tw5iuJFvJ2c4DKpaetKHOPqH--6EaG39NZozCoSYk0M4Up7wH2szlEJAWGLMjL_Mq1u4IQJxeKrkX90ynoMxHjDs5JMwS_iQ9PzS6MHBKL-Chb9cUiiFNKMntbDdUuZnVlHJEmmbwPzQYkeydAen-GJshjxZXjtAE8l4C8hJA1fN3WaDS3hJrKnm" alt="Trainer Avatar" class="w-full h-full object-cover" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main id="main-content" class="flex-1 w-full max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-8 mb-20 md:mb-8">
+    <!-- Injected dynamically by SPA Router -->
+  </main>
+
+  <!-- Mobile BottomNavBar (Stitch Exact Layout) -->
+  <nav class="mobile-nav md:hidden fixed bottom-0 w-full z-50 bg-surface dark:bg-surface-dim rounded-t-2xl shadow-[0_-4px_16px_rgba(30,48,178,0.08)] border-t border-outline-variant flex justify-around items-center h-20 px-3 pb-safe">
+    <a href="#dashboard" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 duration-200" data-route="dashboard">
+      <span class="material-symbols-outlined mb-0.5 text-xl" style="font-variation-settings: 'FILL' 1;">home</span>
+      <span class="text-[11px] font-bold">Home</span>
+    </a>
+    <a href="#decks" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-4 py-1 active:scale-90 duration-200" data-route="decks">
+      <span class="material-symbols-outlined mb-0.5 text-xl">style</span>
+      <span class="text-[11px] font-bold">Decks</span>
+    </a>
+    <a href="#search" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-4 py-1 active:scale-90 duration-200" data-route="search">
+      <span class="material-symbols-outlined mb-0.5 text-xl">search</span>
+      <span class="text-[11px] font-bold">Search</span>
+    </a>
+    <a href="#profile" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-4 py-1 active:scale-90 duration-200" data-route="profile">
+      <span class="material-symbols-outlined mb-0.5 text-xl">person</span>
+      <span class="text-[11px] font-bold">Profile</span>
+    </a>
+  </nav>
+
+  <!-- Application Bootstrap -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
