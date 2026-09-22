@@ -34,8 +34,6 @@ O propósito é fornecer um modelo estruturado de operação onde uma IA atua co
 * Realizar testes de borda e aplicar refinamentos contínuos no código gerado (Loops de Ajustes).
 * Auditar o sistema final através de uma *checklist* de qualidade antes da entrega.
 
-
-
 ---
 
 ## 3. Requisitos do Sistema 
