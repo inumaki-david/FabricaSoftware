@@ -34,13 +34,7 @@ O propósito é fornecer um modelo estruturado de operação onde uma IA atua co
 * Realizar testes de borda e aplicar refinamentos contínuos no código gerado (Loops de Ajustes).
 * Auditar o sistema final através de uma *checklist* de qualidade antes da entrega.
 
-#### 2.2 Características dos Usuários (Equipa da Fábrica)
 
-| Usuário (Papel) | Descrição |
-| :--- | :--- |
-| **Davi (Desenvolvedor / Eng. de Prompts)** | Responsável por transformar os requisitos em comandos precisos para a IA. Fica a cargo de gerar, validar, refatorar e realizar testes de borda no código fornecido pela IA. |
-| **Carolline (Analista de Documentação e Qualidade)** | Responsável por elaborar os manuais do sistema, padronizar o código final, estruturar a apresentação e realizar a auditoria dos requisitos. |
-| **Alice e Ana Luiza (Analistas de Requisitos e Produto)** | Responsáveis pela captação de informações com os usuários finais, compreensão de dores, elaboração de *briefings* e repasse da estrutura de dados. |
 
 ---
 
